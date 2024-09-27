@@ -30,10 +30,10 @@ namespace dotnet_rpg.Controllers
         // [HTTPGet]
         // [Route("GetAll")]
         
-        public ActionResult<List<Character>> Get(){
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> Get(){
             // return BadRequest : 400
             // return NotFound: 404
-            return Ok(_characterService.GetAllCharacter());
+            return Ok(await _characterService.GetAllCharacter());
 
         }
         // Web Api does not kow which method to use
@@ -41,10 +41,10 @@ namespace dotnet_rpg.Controllers
         // => add Routing Attribute
         [HttpGet("{id}")]
         //ID is sent through the URL
-        public ActionResult<Character> GetSingle(int id){
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSingle(int id){
             // return BadRequest : 400
             // return NotFound: 404
-            return Ok(_characterService.GetCharacterById(id));
+            return Ok( await _characterService.GetCharacterById(id));
 
         }
 
@@ -53,10 +53,26 @@ namespace dotnet_rpg.Controllers
         // see the change of our characters
         [HttpPost]
         //JSON object will be sent via the body of the request
-        public ActionResult <List<Character>> AddCharacter (Character newCharacter){
+        public async Task<ActionResult <ServiceResponse<List<GetCharacterDto>>>> AddCharacter (AddCharacterDto newCharacter){
 
            
-            return Ok(_characterService.AddCharacter(newCharacter));
+            return Ok(await _characterService.AddCharacter(newCharacter));
+
+        }
+
+
+        [HttpPut]
+        //JSON object will be sent via the body of the request
+        public async Task<ActionResult <ServiceResponse<GetCharacterDto>>> UpdateCharacter (UpdateCharacterDto updatedCharacter){
+            
+            var response= await _characterService.UpdateCharacter(updatedCharacter);
+
+            if(response.Data is null){
+
+                return NotFound(response);
+            }
+           
+            return Ok(response);
 
         }
         
