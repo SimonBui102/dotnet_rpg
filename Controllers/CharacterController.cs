@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dotnet_rpg.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CharacterController : ControllerBase
@@ -33,7 +35,10 @@ namespace dotnet_rpg.Controllers
         public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> Get(){
             // return BadRequest : 400
             // return NotFound: 404
-            return Ok(await _characterService.GetAllCharacter());
+
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
+
+            return Ok(await _characterService.GetAllCharacter(userId));
 
         }
         // Web Api does not kow which method to use
