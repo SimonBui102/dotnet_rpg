@@ -36,9 +36,9 @@ namespace dotnet_rpg.Controllers
             // return BadRequest : 400
             // return NotFound: 404
 
-            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
+           // int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
 
-            return Ok(await _characterService.GetAllCharacter(userId));
+            return Ok(await _characterService.GetAllCharacter());
 
         }
         // Web Api does not kow which method to use
