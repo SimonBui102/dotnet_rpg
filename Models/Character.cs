@@ -23,6 +23,8 @@ namespace dotnet_rpg.Models
 
         public Weapon? Weapon { get; set; }
 
+        public List<Skill>? Skills { get; set; }
+
 
     }
 }
