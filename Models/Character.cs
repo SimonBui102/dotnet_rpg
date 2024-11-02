@@ -25,6 +25,12 @@ namespace dotnet_rpg.Models
 
         public List<Skill>? Skills { get; set; }
 
+        public int Fight { get; set; }
+
+        public int Victories { get; set; }
+
+        public int Defeats { get; set; }
+
 
     }
 }
